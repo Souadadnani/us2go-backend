@@ -15,3 +15,23 @@ create table viajes(
 	usuario varchar(150),
 	foreign key (usuario) references usuarios(email)	
 )
+
+create table miembros(
+	usuario varchar(150),
+	viaje integer,
+	fechahora timestamp,
+	primary key (usuario, viaje),
+	foreign key(usuario) references usuarios(email),
+	foreign key (viaje) references viajes(id)
+)
+
+create table mensajes(
+	id serial primary key,
+	usuario varchar(150),
+	viaje integer,
+	mensaje text,
+	fechahora timestamp,
+	
+	foreign key(usuario) references usuarios(email),
+	foreign key (viaje) references viajes(id)
+)

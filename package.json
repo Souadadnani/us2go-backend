@@ -1,0 +1,28 @@
+{
+  "name": "proyecto-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.ts",
+    "start": "ts-node idex.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Souadadnani/us2go.git"
+  },
+  "author": "souadadnani",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Souadadnani/us2go/issues"
+  },
+  "homepage": "https://github.com/Souadadnani/us2go#readme",
+  "dependencies": {
+    "@types/express": "^4.17.21",
+    "@types/pg": "^8.11.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "pg": "^8.11.3"
+  }
+}
