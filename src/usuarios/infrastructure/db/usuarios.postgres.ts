@@ -5,32 +5,37 @@ import executeQuery from "../../../context/connection/postgres.connector";
 
 export default class UsuariosRepositoryPostgreSQl implements UsuariosRepository {
 
-    async registro(usuario: Usuario): Promise<Usuario> {
+    async registrar(usuario: Usuario): Promise<Usuario> {
 
-        const query = `insert into usuarios(email, nombre, apellidos, password, telefono) values('${usuario.email}', '${usuario.nombre}', '${usuario.apellidos}', '${usuario.password}', '${usuario.telefono}')`;
+        const query = `insert into usuarios(email, nombre, apellidos, password, telefono) values('${usuario.email}', '${usuario.nombre}', '${usuario.apellidos}', '${usuario.password}', '${usuario.telefono}') returning*`;
         const result: any[] = await executeQuery(query);
+        const userBD = result[0];
         const user: Usuario = {
-            email: result[0].email,
-            nombre: result[0].nombre,
-            apellidos: result[0].apellidos,
-            password: result[0].password,
-            telefono: result[0].telefono
+            email: userBD.email,
+            nombre: userBD.nombre,
+            apellidos: userBD.apellidos,
+            password: userBD.password,
+            telefono: userBD.telefono
         }
-        return user;
+        return user; 
     }
 
     async login(usuario: Usuario): Promise<Usuario> {
+  
         const query = `select * from usuarios where email='${usuario.email}'`;
         const result: any[] = await executeQuery(query);
-        const user: Usuario = {
-            email: result[0].email,
-            nombre: result[0].nombre,
-            apellidos: result[0].apellidos,
-            password: result[0].password,
-            telefono: result[0].telefono
-        }
-        return user;
-    }
-
-    
+        if(result.length === 0){
+            throw new Error("Datos de login incorrectos");
+        }else{
+            const userBD = result[0];
+            const user: Usuario = {
+                email: userBD.email,
+                nombre: userBD.nombre,
+                apellidos: userBD.apellidos,
+                password: userBD.password,
+                telefono: userBD.telefono
+            }
+            return user;
+        } 
+    }    
 }
