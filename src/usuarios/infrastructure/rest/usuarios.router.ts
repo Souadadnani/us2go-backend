@@ -17,8 +17,8 @@ router.post("/registrar", async(request: Request, response: Response)=>{
             password,
             telefono
         }
-        const usuario = await usariosUseCases.registrar(usuarioAPI);
-        response.json({email: usuario.email, nombre: usuario.nombre});
+        const usuarioBD = await usariosUseCases.registrar(usuarioAPI);
+        response.json({email: usuarioBD.email, nombre: usuarioBD.nombre});
     } catch (error) {
        console.error(`No se ha podido realizar el registro ${error}`); 
     }
@@ -46,5 +46,22 @@ router.post("/login", async(request: Request, response: Response)=>{
         console.error(`No se ha podido realizar el inicio de sesión ${error}`);
     }
 });
+
+router.put("/recuperar", async(request: Request, response: Response)=>{
+    try {
+        const {email, password} = request.body;
+        const usuarioAPI: Usuario = {
+            email,
+            password
+        }
+        await usariosUseCases.recuperarPassword(usuarioAPI);
+        response.json({mensaje: "Contraseña recuperada"});
+    } catch (error) {
+        console.error(`No se ha podido realizar el inicio de sesión ${error}`);
+    }
+});
+
+
+
 
 export default router;

@@ -37,5 +37,25 @@ export default class UsuariosRepositoryPostgreSQl implements UsuariosRepository 
             }
             return user;
         } 
-    }    
+    }
+    
+    async recuperarPassword(usuario: Usuario): Promise<void> {
+        const query = `update usuarios set password='${usuario.password}' where email='${usuario.email}'`;
+        const result: any = await executeQuery(query);
+        console.log(result);
+        /* if(result.length === 0){
+            throw new Error("usuario no existe");
+        }else{
+            const userBD = result[0];
+            const user: Usuario = {
+                email: userBD.email,
+                nombre: userBD.nombre,
+                apellidos: userBD.apellidos,
+                password: userBD.password,
+                telefono: userBD.telefono
+            }
+            return user;
+        } */
+    }
+
 }
