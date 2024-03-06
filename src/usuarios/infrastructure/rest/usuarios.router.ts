@@ -54,6 +54,8 @@ router.put("/recuperar", async(request: Request, response: Response)=>{
             email,
             password
         }
+        console.log(usuarioAPI);
+        
         await usariosUseCases.recuperarPassword(usuarioAPI);
         response.json({mensaje: "Contraseña recuperada"});
     } catch (error) {
