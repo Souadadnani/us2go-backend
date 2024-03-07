@@ -58,4 +58,8 @@ export default class UsuariosRepositoryPostgreSQl implements UsuariosRepository 
         } */
     }
 
+   /*  async modificarPerfil(usuario: Usuario): Promise<Usuario> {
+        const query = ``
+    } */
+
 }

@@ -7,27 +7,31 @@ export default class ViajesRepossitoryPostgreSQL implements ViajesRepository {
     //Todos  los endpoints de viajes se hace con auth
 
     async publicarViaje(viaje: Viaje): Promise<Viaje> {
-        const query = `insert into viajes(destino, fechainicio, fechafin, itinerarios, usuario) values('${viaje.destino}', '${viaje.fechaInicio}', '${viaje.fechaFin}', '${viaje.itinerarios}', '${viaje.usuario.email}') returning*`;
+        if(!viaje.usuario) throw new Error("Falta el usuario");
+        const query = `insert into viajes(destino, fechainicio, fechafin, itinerarios, usuario) values('${viaje.destino}', '${(viaje.fechaInicio)?.toLocaleString()}', '${(viaje.fechaFin)?.toLocaleString()}', '${viaje.itinerarios}', '${viaje.usuario.email}') returning*`;
         const result: any[] = await executeQuery(query);
-        const viajeBD: Viaje = result[0];
+        const viajeBD: any = result[0];
         const travel : Viaje = {
             id: viajeBD.id,
             destino: viajeBD.destino,
             itinerarios: viajeBD.itinerarios,
-            fechaInicio: viajeBD.fechaInicio,
-            fechaFin: viajeBD.fechaFin,
+            fechaInicio: viajeBD.fechainicio,
+            fechaFin: viajeBD.fechafin,
             usuario: viajeBD.usuario
         }
-        return travel;
+        return travel;   
     }
 
-    async unirseAViaje(miembro: Miembro): Promise<Viaje> {
-        const query = `insert into miembros(usuario, viaje, fechahora) values('${miembro.usuario}', '${miembro.viaje}', '${miembro.fechaDeUnion}') returning*`;
+    async unirseAViaje(miembro: Miembro): Promise<Miembro> {
+        const query = `insert into miembros(usuario, viaje, fechahora) values('${miembro.usuario.email}', '${miembro.viaje.id}', now()) returning*`;
         const result: any[] = await executeQuery(query);
-        const miembroBD: Miembro = result[0];
-        const viaje: Viaje ={
-            id: miembroBD.viaje.id
+        const miembroBD: any = result[0];
+        const miembroUnido: Miembro ={
+            usuario: miembroBD.usuario,
+            viaje: miembroBD.viaje,
+            fechaDeUnion: miembroBD.fechahora
         }
-        return viaje;
+        console.log("En postgres el return", miembroUnido);
+        return miembroUnido;
     }
 }

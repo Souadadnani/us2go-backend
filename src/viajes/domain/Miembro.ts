@@ -4,5 +4,5 @@ import Viaje from "./Viaje";
 export default interface Miembro {
     usuario: Usuario,
     viaje: Viaje,
-    fechaDeUnion: string
+    fechaDeUnion?: string
 }
