@@ -30,7 +30,7 @@ export default class UsuariosUseCases {
             if(!usuario.password) throw new Error("Contraseña incorrecta");
             const cifrada = hash(usuario.password);
             usuario.password = cifrada;
-            const usuarioBD = await this.usuariosRepository.recuperarPassword(usuario);
+            return await this.usuariosRepository.recuperarPassword(usuario);
         } catch (error) {
             console.error(error);
         }   

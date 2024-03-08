@@ -56,8 +56,8 @@ router.put("/recuperar", async(request: Request, response: Response)=>{
         }
         console.log(usuarioAPI);
         
-        await usariosUseCases.recuperarPassword(usuarioAPI);
-        response.json({mensaje: "Contraseña recuperada"});
+        const usuarioBD = await usariosUseCases.recuperarPassword(usuarioAPI);
+        response.json(usuarioBD);
     } catch (error) {
         console.error(`No se ha podido realizar el inicio de sesión ${error}`);
     }

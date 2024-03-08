@@ -39,11 +39,11 @@ export default class UsuariosRepositoryPostgreSQl implements UsuariosRepository 
         } 
     }
     
-    async recuperarPassword(usuario: Usuario): Promise<void> {
-        const query = `update usuarios set password='${usuario.password}' where email='${usuario.email}'`;
+    async recuperarPassword(usuario: Usuario): Promise<Usuario> {
+        const query = `update usuarios set password='${usuario.password}' where email='${usuario.email}' returning*`;
         const result: any = await executeQuery(query);
         console.log(result);
-        /* if(result.length === 0){
+        if(result.length === 0){
             throw new Error("usuario no existe");
         }else{
             const userBD = result[0];
@@ -51,11 +51,10 @@ export default class UsuariosRepositoryPostgreSQl implements UsuariosRepository 
                 email: userBD.email,
                 nombre: userBD.nombre,
                 apellidos: userBD.apellidos,
-                password: userBD.password,
                 telefono: userBD.telefono
             }
             return user;
-        } */
+        }
     }
 
    /*  async modificarPerfil(usuario: Usuario): Promise<Usuario> {
