@@ -3,7 +3,8 @@ import express from "express";
 import usuariosRouter from "./src/usuarios/infrastructure/rest/usuarios.router";
 import viajesRouter from "./src/viajes/infrastructure/rest/viajes.router";
 import mensajesRouter from "./src/foro/infrastructure/rest/mensajes.router";
-
+import swaggerUi from "swagger-ui-express";
+import swaggerDocument from "./swagger/swagger-output.json"
 
 dotenv.config();
 const port = process.env.PORT;
@@ -16,6 +17,13 @@ const api = "/api/";
 app.use(`${api}usuarios`, usuariosRouter);
 app.use(`${api}viajes`, viajesRouter);
 app.use(`${api}foro`, mensajesRouter);
+
+
+app.use(
+    "/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerDocument, {explorer: true})
+);
 
 app.listen(port, ()=>{
     console.log(`Server is running in port ${port}`);

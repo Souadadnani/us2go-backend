@@ -1,0 +1,426 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "My API",
+    "description": "Description",
+    "version": "1.0.0"
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "${api}usuarios/registrar": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "api",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "nombre": {
+                  "example": "any"
+                },
+                "apellidos": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                },
+                "telefono": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "${api}usuarios/login": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "api",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "${api}usuarios/recuperar": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "api",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "${api}viajes/publicar": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "api",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "emailPL": {
+                  "example": "any"
+                },
+                "destino": {
+                  "example": "any"
+                },
+                "itinerarios": {
+                  "example": "any"
+                },
+                "fechaInicio": {
+                  "example": "any"
+                },
+                "fechaFin": {
+                  "example": "any"
+                },
+                "nombrePL": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "${api}viajes/unirse/{viaje}": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "api",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "viaje",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "emailPL": {
+                  "example": "any"
+                },
+                "nombrePL": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "${api}viajes/eliminar/miembro/{viaje}": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "api",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "viaje",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "emailPL": {
+                  "example": "any"
+                },
+                "nombrePL": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "${api}foro/publicar/mensaje/{viaje}": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "api",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "viaje",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "emailPL": {
+                  "example": "any"
+                },
+                "mensaje": {
+                  "example": "any"
+                },
+                "nombrePL": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "${api}foro/eliminar/{viaje}/{mensaje}": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "api",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "viaje",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "mensaje",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "emailPL": {
+                  "example": "any"
+                },
+                "nombrePL": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "${api}foro/editar/{id}": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "api",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "emailPL": {
+                  "example": "any"
+                },
+                "mensaje": {
+                  "example": "any"
+                },
+                "nombrePL": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    }
+  }
+}
