@@ -43,7 +43,22 @@ router.post("/unirse/:viaje", isAuth, async(request: Request, response: Response
     } catch (error) {
         console.error(error);
     }
-})
+});
+
+router.delete("/eliminar/miembro/:viaje", isAuth, async(request: Request, response: Response)=>{
+    try {
+        const usuario: Usuario = {email: request.body.emailPL};
+        const viaje: Viaje = {id: parseInt(request.params.viaje)};
+        const miembro: Miembro = {
+            usuario,
+            viaje
+        }
+        const miembroEliminado = await viajesUseCases.eliminarMiembro(miembro);
+        response.json(miembroEliminado);
+    } catch (error) {
+        console.error(error);
+    }
+});
 
 
 

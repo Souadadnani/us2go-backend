@@ -13,4 +13,8 @@ export class ViajesUseCases {
     async unirseAViaje(miembro: Miembro) {
         return await this.viajesRepository.unirseAViaje(miembro);
     }
+    
+    async eliminarMiembro(miembro: Miembro) {
+        return await this.viajesRepository.eliminarMiembro(miembro);
+    }
 }

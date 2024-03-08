@@ -34,4 +34,16 @@ export default class ViajesRepossitoryPostgreSQL implements ViajesRepository {
         console.log("En postgres el return", miembroUnido);
         return miembroUnido;
     }
+
+    async eliminarMiembro(miembro: Miembro): Promise<Miembro> {
+        const query = `delete from miembros where usuario='${miembro.usuario.email}' and viaje=${miembro.viaje.id} returning*`;
+        const result: any[] = await executeQuery(query);
+        const eliminadoBD: any = result[0];
+        const eliminado: Miembro = {
+            usuario: eliminadoBD.usuario,
+            viaje: eliminadoBD.viaje,
+            fechaDeUnion: eliminadoBD.fechahora
+        } 
+        return eliminado;
+    }
 }
