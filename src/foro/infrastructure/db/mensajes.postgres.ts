@@ -8,7 +8,8 @@ export default class MensajesRepositoryPostgreSQL implements MensajesRepository{
     //los endpoints del foro va con auth
 
     async publicarMensaje(mensaje: Mensaje): Promise<Mensaje> {
-        const query = `insert into mensajes(mensaje, usuario, viaje, fechahora) values('${mensaje.mensaje}', '${mensaje.usuario.email}', '${mensaje.viaje.id}', now())`;
+        if(!mensaje.viaje) throw new Error(`Falta el usuario`);
+        const query = `insert into mensajes(mensaje, usuario, viaje, fechahora) values('${mensaje.mensaje}', '${mensaje.usuario.email}', '${mensaje.viaje.id}', now()) returning*`;
         const result: any[] = await executeQuery(query);
         const mensajeBD: any = result[0];
         const message: Mensaje = {
@@ -22,8 +23,25 @@ export default class MensajesRepositoryPostgreSQL implements MensajesRepository{
     }
 //eliminar/idMensaje y usuario de token
     async eliminarMensaje(mensaje: Mensaje) {
-        const query = `delete from mensajes where id=${mensaje.id} and usuario='${mensaje.usuario}'`;
+        if(!mensaje.viaje) throw new Error(`Falta el usuario`);
+        const query = `delete from mensajes where id=${mensaje.id} and usuario='${mensaje.usuario.email}' and viaje=${mensaje.viaje.id} returning*`;
         const result: any[] = await executeQuery(query);
-        console.log(result);
+        if(result){
+            console.log("mensaje borrado");
+        }
+    }
+
+    async editarMensaje(mensaje: Mensaje): Promise<Mensaje> {
+        const query = `update mensajes set mensaje='${mensaje.mensaje}' where id=${mensaje.id} and usuario='${mensaje.usuario.email}' returning*`;
+        const result: any[] = await executeQuery(query);
+        const actualizadoBD: any = result[0];
+        const actualizado: Mensaje = {
+            id: actualizadoBD.id,
+            mensaje: actualizadoBD.mensaje,
+            viaje: actualizadoBD.viaje,
+            usuario: actualizadoBD.usuario,
+            fechaHora: actualizadoBD.fechahora
+        }
+        return actualizado;
     }
 }

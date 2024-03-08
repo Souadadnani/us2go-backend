@@ -3,8 +3,8 @@ import Viaje from "../../viajes/domain/Viaje";
 
 export default interface Mensaje {
     id?: number,
-    mensaje: string,
+    mensaje?: string,
     usuario: Usuario,
-    viaje: Viaje,
-    fechaHora: string
+    viaje?: Viaje,
+    fechaHora?: string
 }

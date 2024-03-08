@@ -11,4 +11,8 @@ export default class MensajesUseCases {
     async eliminarMensaje(mensaje: Mensaje) {
         return await this.mensajesRepository.eliminarMensaje(mensaje);
     }
+    
+    async editarMensaje(mensaje: Mensaje) {
+        return await this.mensajesRepository.editarMensaje(mensaje);
+    }
 }
