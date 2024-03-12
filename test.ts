@@ -14,9 +14,9 @@ const viajesUsecases: ViajesUseCases = new ViajesUseCases(new ViajesRepossitoryP
 
 test('registrar', async (test) => {
     const usuario: Usuario = {
-        email: "testregistro@gmail.com",
-        nombre: "Test1",
-        apellidos: "Test2",
+        email: "registrar@gmail.com",
+        nombre: "Test",
+        apellidos: "Test",
         password: "123",
         telefono: 654323232
     }
@@ -27,8 +27,8 @@ test('registrar', async (test) => {
 test('login', async(test)=>{
     const usuario: Usuario = {
         email: "login@gmail.com",
-        nombre: "TestLogin1",
-        apellidos: "TestLogin1",
+        nombre: "TestLogin",
+        apellidos: "TestLogin",
         password: "123",
         telefono: 654323245
     }
@@ -38,15 +38,15 @@ test('login', async(test)=>{
         email: "login@gmail.com",
         password: "123"
     }
-    const userLogeado = await usuariosUseCases.login(userLogin);
-    assert.strictEqual(userLogin.email, userLogeado.email);
+    const userLogueado = await usuariosUseCases.login(userLogin);
+    assert.strictEqual(userLogin.email, userLogueado.email);
 });
 
 test('recuperar', async(test)=>{
     const usuario: Usuario = {
         email: "recuperar@gmail.com",
-        nombre: "TestLogin",
-        apellidos: "TestLogin",
+        nombre: "Test",
+        apellidos: "Test",
         password: "123",
         telefono: 654323245
     }
@@ -64,84 +64,54 @@ test('viajes', async(test)=>{
 test('publicar-viaje', async(test)=>{
     const usuario: Usuario = {
         email: "publicar@gmail.com",
-        nombre: "Test1",
-        apellidos: "Test2",
-        password: "123",
-        telefono: 654323232
-    }
-    const userRegistrado = await usuariosUseCases.registrar(usuario);
-    const userLogin: Usuario = {
-        email: userRegistrado.email,
-        password: "123"
-    }
-    const userLogeado = await usuariosUseCases.login(userLogin);
-
-    const viaje: Viaje = {
-        destino: "test",
-        itinerarios: "iti1, iti2, iti3",
-        fechaInicio: "2024-04-23",
-        fechaFin: "2024-05-02",
-        usuario: userLogeado
-    }
-    const viajeBD = await viajesUsecases.publicarViaje(viaje);
-    assert.strictEqual(viaje.id, viajeBD.id);
-});
-
-test('unirse-viaje', async(test)=>{
-    const usuario: Usuario = {
-        email: "testmiembro@gmail.com",
-        nombre: "Test1",
-        apellidos: "Test2",
-        password: "123",
-        telefono: 654323232
-    }
-    const userRegistrado = await usuariosUseCases.registrar(usuario);
-    const userLogin: Usuario = {
-        email: usuario.email,
-        password: "123"
-    }
-    const userLogeado = await usuariosUseCases.login(userLogin);
-
-    const viaje: Viaje = {
-        destino: "test",
-        itinerarios: "iti1, iti2, iti3",
-        fechaInicio: "2024-04-23",
-        fechaFin: "2024-05-02",
-        usuario: userLogeado
-    }
-    const viajeBD = await viajesUsecases.publicarViaje(viaje);
-
-    const miembro: Miembro = {
-        usuario: userRegistrado,
-        viaje: viajeBD,
-        fechaDeUnion: new Date().toISOString()
-    }
-
-    const miembroUnido = await viajesUsecases.unirseAViaje(miembro);
-    assert.strictEqual(miembro.fechaDeUnion, miembroUnido.fechaDeUnion);
-});
-
-test('salir-del-grupo', async(test)=>{
-    const usuario: Usuario = {
-        email: "salirdelgrupo@gmail.com",
         nombre: "Test",
         apellidos: "Test",
         password: "123",
         telefono: 654323232
     }
     const userRegistrado = await usuariosUseCases.registrar(usuario);
+
+    const userLogin: Usuario = {
+        email: userRegistrado.email,
+        password: "123"
+    }
+    const userLogueado = await usuariosUseCases.login(userLogin);
+console.log(userLogueado);
+    const viaje: Viaje = {
+        destino: "Destino1",
+        itinerarios: "iti1, iti2, iti3",
+        fechaInicio: "2024-04-23",
+        fechaFin: "2024-05-02",
+        usuario: userLogueado
+    }
+    console.log(viaje.usuario.email);
+    const viajeBD = await viajesUsecases.publicarViaje(viaje);
+    console.log(viajeBD)
+    assert.strictEqual(viaje.usuario.email, viajeBD.usuario);
+}); 
+
+test('unirse-viaje', async(test)=>{
+    const usuario: Usuario = {
+        email: "miembro@gmail.com",
+        nombre: "Test",
+        apellidos: "Test",
+        password: "123",
+        telefono: 654323232
+    }
+    const userRegistrado = await usuariosUseCases.registrar(usuario);
+
     const userLogin: Usuario = {
         email: usuario.email,
         password: "123"
     }
-    const userLogeado = await usuariosUseCases.login(userLogin);
+    const userLogueado = await usuariosUseCases.login(userLogin);
 
     const viaje: Viaje = {
-        destino: "test",
+        destino: "Destino2",
         itinerarios: "iti1, iti2, iti3",
-        fechaInicio: "2024-05-06",
-        fechaFin: "2024-05-20",
-        usuario: userLogeado
+        fechaInicio: "2024-04-23",
+        fechaFin: "2024-05-02",
+        usuario: userLogueado
     }
     const viajeBD = await viajesUsecases.publicarViaje(viaje);
 
@@ -150,8 +120,43 @@ test('salir-del-grupo', async(test)=>{
         viaje: viajeBD,
         fechaDeUnion: new Date().toISOString()
     }
-
     const miembroUnido = await viajesUsecases.unirseAViaje(miembro);
+    assert.strictEqual(miembro.usuario.email, miembroUnido.usuario);
+});
+
+test('salir-del-grupo', async(test)=>{
+    const usuario: Usuario = {
+        email: "testsalir@gmail.com",
+        nombre: "Test",
+        apellidos: "Test",
+        password: "123",
+        telefono: 654323232
+    }
+    const userRegistrado = await usuariosUseCases.registrar(usuario);
+
+    const userLogin: Usuario = {
+        email: userRegistrado.email,
+        password: "123"
+    }
+    const userLogueado = await usuariosUseCases.login(userLogin);
+
+    const viaje: Viaje = {
+        destino: "Destino3",
+        itinerarios: "iti1, iti2, iti3",
+        fechaInicio: "2024-05-06",
+        fechaFin: "2024-05-20",
+        usuario: userLogueado
+    }
+    const viajeBD = await viajesUsecases.publicarViaje(viaje);
+
+    const miembro: Miembro = {
+        usuario: userLogueado,
+        viaje: viajeBD,
+        fechaDeUnion: new Date().toISOString()
+    }
+    const miembroUnido = await viajesUsecases.unirseAViaje(miembro);
+    console.log(miembroUnido)
     const elminidado = await viajesUsecases.eliminarMiembro(miembroUnido);
+    console.log(elminidado)
     assert.strictEqual(miembroUnido.usuario, elminidado.usuario);
 })
