@@ -5,14 +5,16 @@ import UsuariosRepositoryPostgreSQl from './src/usuarios/infrastructure/db/usuar
 import { ViajesUseCases } from './src/viajes/application/viajesUseCase';
 import ViajesRepossitoryPostgreSQL from './src/viajes/infrastructure/db/viajes.postgres';
 import Usuario from './src/usuarios/domain/Usuario';
+import Viaje from './src/viajes/domain/Viaje';
+import Miembro from './src/viajes/domain/Miembro';
 
 
 const usuariosUseCases: UsuariosUseCases = new UsuariosUseCases(new UsuariosRepositoryPostgreSQl());
 const viajesUsecases: ViajesUseCases = new ViajesUseCases(new ViajesRepossitoryPostgreSQL());
 
-/* test('registrar', async (test) => {
+test('registrar', async (test) => {
     const usuario: Usuario = {
-        email: "test1@gmail.com",
+        email: "testregistro@gmail.com",
         nombre: "Test1",
         apellidos: "Test2",
         password: "123",
@@ -20,42 +22,136 @@ const viajesUsecases: ViajesUseCases = new ViajesUseCases(new ViajesRepossitoryP
     }
     const userRegistrado = await usuariosUseCases.registrar(usuario);
     assert.strictEqual(usuario.email, userRegistrado.email);
-}); */
+});
 
-/* test('login', async(test)=>{
-    const userARegistrar: Usuario = {
-        email: "testlogin1@gmail.com",
+test('login', async(test)=>{
+    const usuario: Usuario = {
+        email: "login@gmail.com",
         nombre: "TestLogin1",
         apellidos: "TestLogin1",
         password: "123",
         telefono: 654323245
     }
     // este me devuelve nombre y el email del usuario
-    const userRegistrado = await usuariosUseCases.registrar(userARegistrar); 
+    const userRegistrado = await usuariosUseCases.registrar(usuario); 
     const userLogin: Usuario = {
-        email: "test1@gmail.com",
+        email: "login@gmail.com",
         password: "123"
     }
     const userLogeado = await usuariosUseCases.login(userLogin);
     assert.strictEqual(userLogin.email, userLogeado.email);
-}); */
+});
 
 test('recuperar', async(test)=>{
-    const userARegistrar: Usuario = {
-        email: "testlogin@gmail.com",
+    const usuario: Usuario = {
+        email: "recuperar@gmail.com",
         nombre: "TestLogin",
         apellidos: "TestLogin",
         password: "123",
         telefono: 654323245
     }
     
-    const userRegistrado = await usuariosUseCases.registrar(userARegistrar);
-    const userLogin: Usuario = {
-        email: userARegistrar.email,
-        password: userARegistrar.password
-    }
-    const userLogeado = await usuariosUseCases.login(userLogin);
-    const userUpdate = await usuariosUseCases.recuperarPassword(userLogeado);
+    const userRegistrado = await usuariosUseCases.registrar(usuario);
+    const userUpdate = await usuariosUseCases.recuperarPassword(userRegistrado);
     assert.strictEqual(userRegistrado.email, userUpdate.email);
 }); 
 
+test('viajes', async(test)=>{
+    const viajes = await viajesUsecases.getViajesPublicados();
+    assert.strictEqual(0, viajes.length)
+})
+
+test('publicar-viaje', async(test)=>{
+    const usuario: Usuario = {
+        email: "publicar@gmail.com",
+        nombre: "Test1",
+        apellidos: "Test2",
+        password: "123",
+        telefono: 654323232
+    }
+    const userRegistrado = await usuariosUseCases.registrar(usuario);
+    const userLogin: Usuario = {
+        email: userRegistrado.email,
+        password: "123"
+    }
+    const userLogeado = await usuariosUseCases.login(userLogin);
+
+    const viaje: Viaje = {
+        destino: "test",
+        itinerarios: "iti1, iti2, iti3",
+        fechaInicio: "2024-04-23",
+        fechaFin: "2024-05-02",
+        usuario: userLogeado
+    }
+    const viajeBD = await viajesUsecases.publicarViaje(viaje);
+    assert.strictEqual(viaje.id, viajeBD.id);
+});
+
+test('unirse-viaje', async(test)=>{
+    const usuario: Usuario = {
+        email: "testmiembro@gmail.com",
+        nombre: "Test1",
+        apellidos: "Test2",
+        password: "123",
+        telefono: 654323232
+    }
+    const userRegistrado = await usuariosUseCases.registrar(usuario);
+    const userLogin: Usuario = {
+        email: usuario.email,
+        password: "123"
+    }
+    const userLogeado = await usuariosUseCases.login(userLogin);
+
+    const viaje: Viaje = {
+        destino: "test",
+        itinerarios: "iti1, iti2, iti3",
+        fechaInicio: "2024-04-23",
+        fechaFin: "2024-05-02",
+        usuario: userLogeado
+    }
+    const viajeBD = await viajesUsecases.publicarViaje(viaje);
+
+    const miembro: Miembro = {
+        usuario: userRegistrado,
+        viaje: viajeBD,
+        fechaDeUnion: new Date().toISOString()
+    }
+
+    const miembroUnido = await viajesUsecases.unirseAViaje(miembro);
+    assert.strictEqual(miembro.fechaDeUnion, miembroUnido.fechaDeUnion);
+});
+
+test('salir-del-grupo', async(test)=>{
+    const usuario: Usuario = {
+        email: "salirdelgrupo@gmail.com",
+        nombre: "Test",
+        apellidos: "Test",
+        password: "123",
+        telefono: 654323232
+    }
+    const userRegistrado = await usuariosUseCases.registrar(usuario);
+    const userLogin: Usuario = {
+        email: usuario.email,
+        password: "123"
+    }
+    const userLogeado = await usuariosUseCases.login(userLogin);
+
+    const viaje: Viaje = {
+        destino: "test",
+        itinerarios: "iti1, iti2, iti3",
+        fechaInicio: "2024-05-06",
+        fechaFin: "2024-05-20",
+        usuario: userLogeado
+    }
+    const viajeBD = await viajesUsecases.publicarViaje(viaje);
+
+    const miembro: Miembro = {
+        usuario: userRegistrado,
+        viaje: viajeBD,
+        fechaDeUnion: new Date().toISOString()
+    }
+
+    const miembroUnido = await viajesUsecases.unirseAViaje(miembro);
+    const elminidado = await viajesUsecases.eliminarMiembro(miembroUnido);
+    assert.strictEqual(miembroUnido.usuario, elminidado.usuario);
+})

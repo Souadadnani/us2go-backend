@@ -4,9 +4,6 @@ import MensajesRepository from "../../domain/mensajes.repository";
 
 export default class MensajesRepositoryPostgreSQL implements MensajesRepository{
 
-
-    //los endpoints del foro va con auth
-//get all mensajes
     async publicarMensaje(mensaje: Mensaje): Promise<Mensaje> {
         if(!mensaje.viaje) throw new Error(`Falta el usuario`);
         const query = `insert into mensajes(mensaje, usuario, viaje, fechahora) values('${mensaje.mensaje}', '${mensaje.usuario.email}', '${mensaje.viaje.id}', now()) returning*`;
@@ -21,7 +18,7 @@ export default class MensajesRepositoryPostgreSQL implements MensajesRepository{
         }
         return message;
     }
-//eliminar/idMensaje y usuario de token
+
     async eliminarMensaje(mensaje: Mensaje) {
         if(!mensaje.viaje) throw new Error(`Falta el usuario`);
         const query = `delete from mensajes where id=${mensaje.id} and usuario='${mensaje.usuario.email}' and viaje=${mensaje.viaje.id} returning*`;

@@ -6,7 +6,6 @@ import executeQuery from "../../../context/connection/postgres.connector";
 export default class UsuariosRepositoryPostgreSQl implements UsuariosRepository {
 
     async registrar(usuario: Usuario): Promise<Usuario> {
-
         const query = `insert into usuarios(email, nombre, apellidos, password, telefono) values('${usuario.email}', '${usuario.nombre}', '${usuario.apellidos}', '${usuario.password}', '${usuario.telefono}') returning*`;
         const result: any[] = await executeQuery(query);
         const userBD = result[0];
@@ -21,7 +20,6 @@ export default class UsuariosRepositoryPostgreSQl implements UsuariosRepository 
     }
 
     async login(usuario: Usuario): Promise<Usuario> {
-  
         const query = `select * from usuarios where email='${usuario.email}'`;
         const result: any[] = await executeQuery(query);
         if(result.length === 0){

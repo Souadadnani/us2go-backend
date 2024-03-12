@@ -4,7 +4,7 @@ export default interface Viaje {
     id?: number,
     destino?: string,
     itinerarios?: string,
-    fechaInicio?: Date,
-    fechaFin?: Date,
+    fechaInicio?: string,
+    fechaFin?: string,
     usuario?: Usuario
 }

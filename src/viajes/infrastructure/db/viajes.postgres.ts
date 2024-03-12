@@ -31,7 +31,6 @@ export default class ViajesRepossitoryPostgreSQL implements ViajesRepository {
             viaje: miembroBD.viaje,
             fechaDeUnion: miembroBD.fechahora
         }
-        console.log("En postgres el return", miembroUnido);
         return miembroUnido;
     }
 
