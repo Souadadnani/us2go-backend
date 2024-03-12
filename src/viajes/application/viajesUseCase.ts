@@ -17,4 +17,8 @@ export class ViajesUseCases {
     async eliminarMiembro(miembro: Miembro) {
         return await this.viajesRepository.eliminarMiembro(miembro);
     }
+
+    async getViajesPublicados() {
+        return await this.viajesRepository.getViajesPublicados();
+    }
 }

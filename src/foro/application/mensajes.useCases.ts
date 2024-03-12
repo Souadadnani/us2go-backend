@@ -15,4 +15,8 @@ export default class MensajesUseCases {
     async editarMensaje(mensaje: Mensaje) {
         return await this.mensajesRepository.editarMensaje(mensaje);
     }
+
+    async getForo() {
+        return await this.mensajesRepository.getForo();
+    }
 }

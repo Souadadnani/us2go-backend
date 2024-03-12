@@ -1,10 +1,10 @@
 import executeQuery from "../../../context/connection/postgres.connector";
+import Usuario from "../../../usuarios/domain/Usuario";
 import Miembro from "../../domain/Miembro";
 import Viaje from "../../domain/Viaje";
 import ViajesRepository from "../../domain/viajes.repository";
 
 export default class ViajesRepossitoryPostgreSQL implements ViajesRepository {
-    //Todos  los endpoints de viajes se hace con auth
 
     async publicarViaje(viaje: Viaje): Promise<Viaje> {
         if(!viaje.usuario) throw new Error("Falta el usuario");
@@ -45,5 +45,26 @@ export default class ViajesRepossitoryPostgreSQL implements ViajesRepository {
             fechaDeUnion: eliminadoBD.fechahora
         } 
         return eliminado;
+    }
+
+    async getViajesPublicados(): Promise<Viaje[]> {
+        const result: any[] = await executeQuery(`select v.*, u.nombre, u.apellidos from viajes v left join usuarios u on v.usuario=u.email`);
+        const viajes = result.map(item=>{
+            const usuario: Usuario = {
+                nombre: item.nombre,
+                apellidos: item.apellidos,
+                email: item.usuario
+            }
+            const viaje: Viaje = {
+                id: item.id,
+                destino: item.destino,
+                itinerarios: item.itinerarios,
+                fechaInicio: item.fechainicio,
+                fechaFin: item.fechafin,
+                usuario: usuario
+            }
+            return viaje;
+        });
+        return viajes;
     }
 }

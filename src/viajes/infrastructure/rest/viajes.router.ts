@@ -45,7 +45,7 @@ router.post("/unirse/:viaje", isAuth, async(request: Request, response: Response
     }
 });
 
-router.delete("/eliminar/miembro/:viaje", isAuth, async(request: Request, response: Response)=>{
+router.delete("/salir/miembro/:viaje", isAuth, async(request: Request, response: Response)=>{
     try {
         const usuario: Usuario = {email: request.body.emailPL};
         const viaje: Viaje = {id: parseInt(request.params.viaje)};
@@ -60,6 +60,13 @@ router.delete("/eliminar/miembro/:viaje", isAuth, async(request: Request, respon
     }
 });
 
-
+router.get("", async(request: Request, response: Response)=>{
+    try {
+        const viajes = await viajesUseCases.getViajesPublicados();
+        response.json(viajes);
+    } catch (error) {
+        console.error(error);
+    }
+})
 
 export default router;

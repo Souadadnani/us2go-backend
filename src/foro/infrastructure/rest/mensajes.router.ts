@@ -64,6 +64,15 @@ router.put("/editar/:id", isAuth, async(request: Request, response: Response)=>{
     } catch (error) {
         console.error(error);
     }
-})
+});
+
+router.get("", async(request: Request, response: Response)=>{
+    try {
+        const mensajes = await mensajesUseCases.getForo(); 
+        response.json(mensajes);
+    } catch (error) {
+        console.error(error);
+    }
+});
 
 export default router;

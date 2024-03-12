@@ -6,7 +6,7 @@ export default class MensajesRepositoryPostgreSQL implements MensajesRepository{
 
 
     //los endpoints del foro va con auth
-
+//get all mensajes
     async publicarMensaje(mensaje: Mensaje): Promise<Mensaje> {
         if(!mensaje.viaje) throw new Error(`Falta el usuario`);
         const query = `insert into mensajes(mensaje, usuario, viaje, fechahora) values('${mensaje.mensaje}', '${mensaje.usuario.email}', '${mensaje.viaje.id}', now()) returning*`;
@@ -43,5 +43,20 @@ export default class MensajesRepositoryPostgreSQL implements MensajesRepository{
             fechaHora: actualizadoBD.fechahora
         }
         return actualizado;
+    }
+
+    async getForo(): Promise<Mensaje[]> {
+        const result: any[] = await executeQuery(`select * from mensajes`);
+        const mensajes: Mensaje[] = result.map(element=>{
+            const mensaje: Mensaje = {
+                id: element.id,
+                viaje: element.viaje,
+                mensaje: element.mensaje,
+                usuario: element. usuario,
+                fechaHora: element.fechahora
+            }
+            return mensaje;
+        });
+        return mensajes;
     }
 }
