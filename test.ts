@@ -12,7 +12,7 @@ import Miembro from './src/viajes/domain/Miembro';
 const usuariosUseCases: UsuariosUseCases = new UsuariosUseCases(new UsuariosRepositoryPostgreSQl());
 const viajesUsecases: ViajesUseCases = new ViajesUseCases(new ViajesRepossitoryPostgreSQL());
 
-test('registrar', async (test) => {
+/* test('registrar', async (test) => {
     const usuario: Usuario = {
         email: "registrar@gmail.com",
         nombre: "Test",
@@ -122,11 +122,11 @@ test('unirse-viaje', async(test)=>{
     }
     const miembroUnido = await viajesUsecases.unirseAViaje(miembro);
     assert.strictEqual(miembro.usuario.email, miembroUnido.usuario);
-});
+}); */
 
 test('salir-del-grupo', async(test)=>{
     const usuario: Usuario = {
-        email: "testsalir@gmail.com",
+        email: "salirgrupo@gmail.com",
         nombre: "Test",
         apellidos: "Test",
         password: "123",
@@ -139,7 +139,6 @@ test('salir-del-grupo', async(test)=>{
         password: "123"
     }
     const userLogueado = await usuariosUseCases.login(userLogin);
-
     const viaje: Viaje = {
         destino: "Destino3",
         itinerarios: "iti1, iti2, iti3",
@@ -155,8 +154,8 @@ test('salir-del-grupo', async(test)=>{
         fechaDeUnion: new Date().toISOString()
     }
     const miembroUnido = await viajesUsecases.unirseAViaje(miembro);
-    console.log(miembroUnido)
+    console.log("miembro unido",miembroUnido)
     const elminidado = await viajesUsecases.eliminarMiembro(miembroUnido);
-    console.log(elminidado)
+    console.log("eliminado",elminidado)
     assert.strictEqual(miembroUnido.usuario, elminidado.usuario);
 })

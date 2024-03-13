@@ -43,6 +43,7 @@ export default class ViajesRepossitoryPostgreSQL implements ViajesRepository {
             viaje: eliminadoBD.viaje,
             fechaDeUnion: eliminadoBD.fechahora
         } 
+        console.log(eliminado)
         return eliminado;
     }
 
