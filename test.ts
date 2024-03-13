@@ -12,7 +12,7 @@ import Miembro from './src/viajes/domain/Miembro';
 const usuariosUseCases: UsuariosUseCases = new UsuariosUseCases(new UsuariosRepositoryPostgreSQl());
 const viajesUsecases: ViajesUseCases = new ViajesUseCases(new ViajesRepossitoryPostgreSQL());
 
-/* test('registrar', async (test) => {
+test('registrar', async (test) => {
     const usuario: Usuario = {
         email: "registrar@gmail.com",
         nombre: "Test",
@@ -122,7 +122,7 @@ test('unirse-viaje', async(test)=>{
     }
     const miembroUnido = await viajesUsecases.unirseAViaje(miembro);
     assert.strictEqual(miembro.usuario.email, miembroUnido.usuario);
-}); */
+});
 
 test('salir-del-grupo', async(test)=>{
     const usuario: Usuario = {
