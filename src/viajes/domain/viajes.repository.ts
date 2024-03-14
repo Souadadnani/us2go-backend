@@ -7,4 +7,5 @@ export default interface ViajesRepository {
     unirseAViaje(miembro: Miembro): Promise<Miembro>;
     eliminarMiembro(miembro: Miembro): Promise<Miembro>;
     getViajesPublicados(): Promise<Viaje[]>;
+    eliminarViaje(viaje: Viaje): Promise<Viaje>;
 }

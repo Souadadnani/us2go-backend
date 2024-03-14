@@ -21,4 +21,8 @@ export class ViajesUseCases {
     async getViajesPublicados() {
         return await this.viajesRepository.getViajesPublicados();
     }
+
+    async eliminarViaje(viaje: Viaje) {
+        return await this.viajesRepository.eliminarViaje(viaje);
+    }
 }

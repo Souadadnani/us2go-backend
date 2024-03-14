@@ -13,9 +13,10 @@ const viajesUseCases: ViajesUseCases = new ViajesUseCases(new ViajesRepossitoryP
 router.post("/publicar", isAuth, async(request: Request, response: Response)=>{
     try {
         const email = request.body.emailPL;
-        const {destino, itinerarios, fechaInicio, fechaFin} = request.body;
+        const {origen, destino, itinerarios, fechaInicio, fechaFin} = request.body;
         const usuario: Usuario = {email};
         const viaje: Viaje = {
+            origen,
             destino,
             itinerarios,
             fechaInicio,
@@ -66,6 +67,21 @@ router.get("", async(request: Request, response: Response)=>{
         response.json(viajes);
     } catch (error) {
         console.error(error);
+    }
+});
+
+router.delete("/anular/:viaje",isAuth, async(request: Request, response: Response)=>{
+    try {
+        const id = parseInt(request.params.viaje);
+        const usuario: Usuario = {email: request.body.emailPL};
+        const viaje: Viaje = {
+            id,
+            usuario
+        };
+        const viajeEliminado = await viajesUseCases.eliminarViaje(viaje);
+        response.json(viajeEliminado);
+    } catch (error) {
+        console.log(error);
     }
 })
 
