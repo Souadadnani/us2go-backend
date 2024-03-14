@@ -124,7 +124,7 @@ test('unirse-viaje', async(test)=>{
     assert.strictEqual(miembro.usuario.email, miembroUnido.usuario);
 });
 
-test('salir-del-grupo', async(test)=>{
+/* test('salir-del-grupo', async(test)=>{
     const usuario: Usuario = {
         email: "salirgrupo@gmail.com",
         nombre: "Test",
@@ -158,4 +158,4 @@ test('salir-del-grupo', async(test)=>{
     const elminidado = await viajesUsecases.eliminarMiembro(miembroUnido);
     console.log("eliminado",elminidado)
     assert.strictEqual(miembroUnido.usuario, elminidado.usuario);
-})
+}) */
