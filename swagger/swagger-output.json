@@ -5,7 +5,7 @@
     "description": "Description",
     "version": "1.0.0"
   },
-  "host": "localhost:8080",
+  "host": "52.70.155.19:8080",
   "basePath": "/",
   "schemes": [
     "http"
@@ -222,7 +222,54 @@
         }
       }
     },
-    "${api}viajes/eliminar/miembro/{viaje}": {
+    "${api}viajes/salir/miembro/{viaje}": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "api",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "viaje",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "emailPL": {
+                  "example": "any"
+                },
+                "nombrePL": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "${api}viajes/anular/{viaje}": {
       "delete": {
         "description": "",
         "parameters": [
