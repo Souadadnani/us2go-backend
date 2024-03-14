@@ -13,10 +13,9 @@ const viajesUseCases: ViajesUseCases = new ViajesUseCases(new ViajesRepossitoryP
 router.post("/publicar", isAuth, async(request: Request, response: Response)=>{
     try {
         const email = request.body.emailPL;
-        const {origen, destino, itinerarios, fechaInicio, fechaFin} = request.body;
+        const {destino, itinerarios, fechaInicio, fechaFin} = request.body;
         const usuario: Usuario = {email};
         const viaje: Viaje = {
-            origen,
             destino,
             itinerarios,
             fechaInicio,
