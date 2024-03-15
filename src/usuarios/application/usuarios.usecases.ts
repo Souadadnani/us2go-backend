@@ -35,4 +35,17 @@ export default class UsuariosUseCases {
             console.error(error);
         }   
     }
+
+    async  modificarPerfil(usuario: Usuario, emailTK: string)  {
+        try {
+            
+            if(!usuario.password) throw new Error("falta el password");
+            const cifrada = hash(usuario.password);
+            usuario.password = cifrada;
+            return await this.usuariosRepository.modificarPerfil(usuario, emailTK);
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
 }

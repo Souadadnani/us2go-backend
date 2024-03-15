@@ -2,7 +2,7 @@ import express, {Response, Request} from "express";
 import UsuariosUseCases from "../../application/usuarios.usecases";
 import UsuariosRepositoryPostgreSQl from "../db/usuarios.postgres";
 import Usuario from "../../domain/Usuario";
-import { createToken } from "../../../context/security/auth";
+import { createToken, isAuth } from "../../../context/security/auth";
 
 const router = express.Router();
 const usariosUseCases: UsuariosUseCases = new UsuariosUseCases(new UsuariosRepositoryPostgreSQl());
@@ -63,6 +63,21 @@ router.put("/recuperar", async(request: Request, response: Response)=>{
     }
 });
 
+router.put("/modificar/perfil", isAuth, async(request: Request, resposnse: Response)=>{
+    try {
+        const {email, password, telefono} = request.body;
+        const emailTK = request.body.emailPL;
+        const usuario: Usuario = {
+            email,
+            password,
+            telefono
+        }
+        const actualizado = await usariosUseCases.modificarPerfil(usuario, emailTK);
+        resposnse.json(actualizado);
+    } catch (error) {
+        console.error(error);
+    }
+});
 
 
 

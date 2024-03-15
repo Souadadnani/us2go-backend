@@ -8,11 +8,12 @@ export default class ViajesRepossitoryPostgreSQL implements ViajesRepository {
 
     async publicarViaje(viaje: Viaje): Promise<Viaje> {
         if(!viaje.usuario) throw new Error("Falta el usuario");
-        const query = `insert into viajes(destino, fechainicio, fechafin, itinerarios, usuario) values('${viaje.destino}', '${(viaje.fechaInicio)?.toLocaleString()}', '${(viaje.fechaFin)?.toLocaleString()}', '${viaje.itinerarios}', '${viaje.usuario.email}') returning*`;
+        const query = `insert into viajes(origen, destino, fechainicio, fechafin, itinerarios, usuario) values('${viaje.origen}', '${viaje.destino}', '${(viaje.fechaInicio)?.toLocaleString()}', '${(viaje.fechaFin)?.toLocaleString()}', '${viaje.itinerarios}', '${viaje.usuario.email}') returning*`;
         const result: any[] = await executeQuery(query);
         const viajeBD: any = result[0];
         const travel : Viaje = {
             id: viajeBD.id,
+            origen: viajeBD.origen,
             destino: viajeBD.destino,
             itinerarios: viajeBD.itinerarios,
             fechaInicio: viajeBD.fechainicio,
@@ -57,6 +58,7 @@ export default class ViajesRepossitoryPostgreSQL implements ViajesRepository {
             }
             const viaje: Viaje = {
                 id: item.id,
+                origen: item.origen,
                 destino: item.destino,
                 itinerarios: item.itinerarios,
                 fechaInicio: item.fechainicio,
@@ -73,6 +75,7 @@ export default class ViajesRepossitoryPostgreSQL implements ViajesRepository {
         const viajeBD: any = result[0];
         const eliminado: Viaje = {
             id: viajeBD.id,
+            origen: viajeBD.origen,
             destino: viajeBD.destino,
             itinerarios: viajeBD.itinerarios,
             fechaInicio: viajeBD.fechainicio,

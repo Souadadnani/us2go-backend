@@ -55,8 +55,17 @@ export default class UsuariosRepositoryPostgreSQl implements UsuariosRepository 
         }
     }
 
-   /*  async modificarPerfil(usuario: Usuario): Promise<Usuario> {
-        const query = ``
-    } */
+    async modificarPerfil(usuario: Usuario, emailTK: string): Promise<Usuario> {
+        const query = `update usuarios set email='${usuario.email}', password='${usuario.password}', telefono=${usuario.telefono} where email='${emailTK}' returning*`;
+        const result: any[] = await executeQuery(query);
+        const userBD: any = result[0];
+        const actualizado: Usuario = {
+            email: userBD.email,
+            nombre: userBD.nombre,
+            apellidos: userBD.apellidos,
+            telefono: userBD.telefono
+        }
+        return actualizado;
+    }
 
 }

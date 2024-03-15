@@ -1,24 +1,24 @@
 create table usuarios(
-	email varchar(150) primary key,
-	password varchar(250) not null,
+	email varchar(100) primary key,
+	password varchar(100) not null,
 	nombre varchar(100) not null,
-	apellidos varchar(120) not null,
+	apellidos varchar(100) not null,
 	telefono integer
 );
 
 create table viajes(
 	id serial primary key,
-	origen varchar(100) not null,
-	destino varchar(100) not null,
+	origen varchar(200) not null,
+	destino varchar(200) not null,
 	fechainicio timestamp not null,
 	fechafin timestamp not null,
 	itinerarios text,
-	usuario varchar(150),
+	usuario varchar(100),
 	foreign key (usuario) references usuarios(email)	
 );
 
 create table miembros(
-	usuario varchar(150),
+	usuario varchar(100),
 	viaje integer,
 	fechahora timestamp,
 	primary key (usuario, viaje),
@@ -28,7 +28,7 @@ create table miembros(
 
 create table mensajes(
 	id serial primary key,
-	usuario varchar(150),
+	usuario varchar(100),
 	viaje integer,
 	mensaje text,
 	fechahora timestamp,

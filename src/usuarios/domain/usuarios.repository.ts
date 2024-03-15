@@ -4,4 +4,5 @@ export default interface UsuariosRepository {
     registrar(usuario: Usuario): Promise<Usuario>;
     login(usuario: Usuario): Promise<Usuario>;
     recuperarPassword(usuario: Usuario): Promise<Usuario>;
+    modificarPerfil(usuario: Usuario, emailTK: string): Promise<Usuario>;
 }
