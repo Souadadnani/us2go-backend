@@ -3,5 +3,6 @@ export default interface Usuario {
     nombre?: string,
     apellidos?: string,
     password?: string,
-    telefono?: number 
+    telefono?: number,
+    imagen?: string
 }

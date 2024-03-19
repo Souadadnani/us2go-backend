@@ -3,8 +3,10 @@ create table usuarios(
 	password varchar(100) not null,
 	nombre varchar(100) not null,
 	apellidos varchar(100) not null,
-	telefono integer
+	telefono integer (no hace falta a la hora de registrar sera necesario a la hora de publicar el viaje)
 );
+
+la clave foranea email del usuario tiene que ser en cascada en los demas tablas
 
 create table viajes(
 	id serial primary key,

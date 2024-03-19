@@ -6,7 +6,7 @@ import executeQuery from "../../../context/connection/postgres.connector";
 export default class UsuariosRepositoryPostgreSQl implements UsuariosRepository {
 
     async registrar(usuario: Usuario): Promise<Usuario> {
-        const query = `insert into usuarios(email, nombre, apellidos, password, telefono) values('${usuario.email}', '${usuario.nombre}', '${usuario.apellidos}', '${usuario.password}', '${usuario.telefono}') returning*`;
+        const query = `insert into usuarios(email, nombre, apellidos, password, telefono) values('${usuario.email}', '${usuario.nombre}', '${usuario.apellidos}', '${usuario.password}', '${usuario.telefono}', '${usuario.imagen}') returning*`;
         const result: any[] = await executeQuery(query);
         const userBD = result[0];
         const user: Usuario = {
@@ -14,7 +14,8 @@ export default class UsuariosRepositoryPostgreSQl implements UsuariosRepository 
             nombre: userBD.nombre,
             apellidos: userBD.apellidos,
             password: userBD.password,
-            telefono: userBD.telefono
+            telefono: userBD.telefono,
+            imagen: userBD.imagen
         }
         return user; 
     }
@@ -36,6 +37,14 @@ export default class UsuariosRepositoryPostgreSQl implements UsuariosRepository 
             return user;
         } 
     }
+
+  /*   async getImagenPerfil(usuario: Usuario): Promise<string> {
+        const query = `select * from perfiles_imagenes where usuario=${usuario.email}`;
+        const result: any[] = await executeQuery(query);
+        const imagen_perfil: any ={
+
+        }
+    } */
     
     async recuperarPassword(usuario: Usuario): Promise<Usuario> {
         const query = `update usuarios set password='${usuario.password}' where email='${usuario.email}' returning*`;
